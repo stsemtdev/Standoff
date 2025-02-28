@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Standoff</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="start-menu">
+    <h1>Standoff</h1>
+    <h3>Only the Quickest Survive</h3>
+    <button id="start-button">Start Game</button>
+  </div>
+
+  <div id="game-screen" style="display: none;">
+    <div id="shooters-container">
+      <img id="opponent-shooter" src="asset/cowboys/cowboy2.png" alt="Player Shooter">
+      <img id="player-shooter" src="asset/cowboys/cowboy1back.png" alt="Opponent Shooter">
+    </div>
+    <div id="ready-set-go"></div>
+    <button id="ready-button">Ready</button>
+    <div id="red-dot" style="display: none;"></div>
+  </div>
+  <audio id="gun-sound" src="asset/sound/colt-navy-gun-shot.mp3"></audio>
+  <script src="src/script.js"></script>
+</body>
+</html>

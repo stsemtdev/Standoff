@@ -1,6 +1,11 @@
 document.getElementById('start-button').addEventListener('click', startGame);
 document.getElementById('ready-button').addEventListener('click', showReadySetGo);
 
+document.getElementById("game-back-button").addEventListener('click', () => {
+    document.getElementById('start-menu').style.display = 'flex';
+    document.getElementById('game-screen').style.display = 'none';
+})
+
 function startGame() {
     document.getElementById('start-menu').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';

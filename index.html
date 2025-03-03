@@ -3,13 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Standoff</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style/start.css">
+  <link rel="stylesheet" href="style/campaign.css">
+  <link rel="stylesheet" href="style/highscore.css">
+  <link rel="stylesheet" href="style/training.css">
 </head>
 <body>
   <div id="start-menu">
     <h1>Standoff</h1>
     <h3>Only the Quickest Survive</h3>
-    <button id="start-button">Start Game</button>
+    <button id="start-button">Start Campaign</button>
+    <button id="training-button">Training</button>
+    <button id="highscore-button">Gunslinger's Glory</button>
+    <button id="quit-button">Quit</button>
   </div>
 
   <div id="game-screen" style="display: none;">
@@ -20,8 +26,33 @@
     <div id="ready-set-go"></div>
     <button id="ready-button">Ready</button>
     <div id="red-dot" style="display: none;"></div>
+    <button id="game-back-button">Back</button>
   </div>
+
+  <div id="training-screen" style="display: none;">
+    <div id="training-area">
+      <h2>Training Mode</h2>
+      <div id="ready-set-go-training"></div>
+      <button id="ready-training-button">Ready</button>
+      <img id="player-shooter-training" src="asset/cowboys/cowboy1back.png" alt="Opponent Shooter">
+      <div id="red-dot-training" style="display: none;"></div>
+      <div id="counter-training">Hits: 0</div>
+    </div>
+    <button id="training-back-button">Back</button>
+  </div>
+
+  <div id="highscore-screen" style="display: none;">
+    <div id="highscore-area">
+      <h2>Highscore</h2>
+      <ul id="highscore-list"></ul>
+      <button id="highscore-back-button">Back</button>
+    </div>
+  </div>
+
   <audio id="gun-sound" src="asset/sound/colt-navy-gun-shot.mp3"></audio>
-  <script src="src/script.js"></script>
+  <script src="src/start.js"></script>
+  <script src="src/campaign.js"></script>
+  <script src="src/training.js"></script>
+  <script src="src/highscore.js"></script>
 </body>
 </html>

@@ -1,44 +1,59 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #282c34;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    flex-direction: column;
-  }
+body{
+  font-family: Arial, sans-serif;
+  background-color: #282c34;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  flex-direction: column;
+  background-image: url('/asset/start/background-start.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f4f4f4;
+}
+
+#game-icon{
+  height: 150px;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40px;
+}
   
-  #start-menu {
+#start-menu{
     text-align: center;
     background-color: #3b3f4a;
     padding: 20px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-  }
-  
-  #ready-button,
-  #start-button,
-  #training-button,
-  #highscore-button,
-  #quit-button{
+}
+
+#campaign-button,
+#training-button,
+#highscore-button,
+#quit-button{
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 1rem;
-    background-color: #61dafb;
+    color: white;
+    background-color: rgb(150, 111, 51);
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  #ready-button:hover,
-  #start-button:hover,
-  #training-button:hover,
-  #highscore-button:hover,
-  #quit-button:hover{
-    background-color: #21a1f1;
-  }
-  
-  
+}
+
+#campaign-button:hover,
+#training-button:hover,
+#highscore-button:hover,
+#quit-button:hover{
+    background-color: #513600;
+}
+
+.hidden-background {
+  background-image: none !important;
+  background-color: #3b3f4a;
+}

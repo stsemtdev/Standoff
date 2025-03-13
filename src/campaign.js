@@ -1,127 +1,189 @@
-document.getElementById('start-button').addEventListener('click', startGame);
-document.getElementById('ready-button').addEventListener('click', showReadySetGo);
-
-document.getElementById("game-back-button").addEventListener('click', () => {
-    document.getElementById('start-menu').style.display = 'flex';
-    document.getElementById('game-screen').style.display = 'none';
-})
+document.getElementById('campaign-button').addEventListener('click', () => {
+    startGame();
+});
 
 function startGame() {
-    document.getElementById('start-menu').style.display = 'none';
-    document.getElementById('game-screen').style.display = 'block';
-}
+    (function() {
+        const sounds = [
+            '../asset/sounds/gun-sound-1.mp3',
+            '../asset/sounds/gun-sound-2.mp3',
+            '../asset/sounds/gun-sound-3.mp3',
+            '../asset/sounds/gun-sound-4.mp3',
+            '../asset/sounds/gun-sound-5.mp3',
+            '../asset/sounds/gun-sound-6.mp3',
+            '../asset/sounds/gun-sound-7.mp3',
+            '../asset/sounds/gun-sound-8.mp3',
+        ];
 
-function showReadySetGo() {
-    const readySetGo = document.getElementById('ready-set-go');
-    readySetGo.textContent = 'Ready';
-    setTimeout(() => {
-        readySetGo.textContent = 'Set';
-        const randomDelay = (Math.floor(Math.random() * (12)) + 3) * 1000;
-        setTimeout(() => {
-            readySetGo.textContent = 'Go';
-            showRedDot();
-            enableClickDetection();
-        }, randomDelay);
-    }, 1000);
-}
+        const playGunSound = (() => {
+            let soundIndex = 0;
+            return function() {
+                const gunSound = new Audio(sounds[soundIndex]);
+                gunSound.currentTime = 0;
+                gunSound.play();
+                soundIndex = (soundIndex + 1) % sounds.length;
+            };
+        })();
 
-function showRedDot() {
-    const redDot = document.getElementById('red-dot');
-    const margin = 100;
-    const randomX = Math.floor(Math.random() * (window.innerWidth / 2 - margin * 2)) + window.innerWidth / 4 + margin;
-    const randomY = Math.floor(Math.random() * (window.innerHeight / 2 - margin * 2)) + window.innerHeight / 4 + margin;
+        const playAmbianceSound = () => {
+            const ambianceSound = new Audio('../asset/sounds/ambiance.mp3')
+            ambianceSound.volume = 0.1;
+            ambianceSound.play();
+        };
+        
+        playAmbianceSound();
+        
+        const elements = {
+            body: document.body,
+            startMenu: document.getElementById('start-menu'),
+            campaignScreen: document.getElementById('campaign-screen'),
+            campaignBackButton: document.getElementById('campaign-back-button'),
+            readyButton: document.getElementById('ready-campaign-button'),
+            redDot: document.getElementById('red-dot-campaign'),
+            readySetGoText: document.getElementById('ready-set-go-campaign'),
+            playerShooter: document.getElementById('campaign-player-shooter'),
+            opponentShooter: document.getElementById('campaign-opponent-shooter')
+        };
 
-    redDot.style.left = `${randomX}px`;
-    redDot.style.top = `${randomY}px`;
-    redDot.style.display = 'block';
+        let timeouts = [];
+        let outsideClickHandler = null;
+        let isGameActive = true;
 
-    let timeout = setTimeout(() => {
-        changeOpponentImage(); //Animation for opponent win
-        setTimeout(() => {
-            alert('You lose!');
+        elements.campaignBackButton.addEventListener('click', handleBackButton);
+        elements.readyButton.addEventListener('click', handleReadyButton);
+
+        elements.body.classList.add('hidden-background');
+        elements.startMenu.style.display = 'none';
+        elements.campaignScreen.style.display = 'block';
+
+        function handleBackButton() {
+            isGameActive = false;
+            cleanupEvents();
+            elements.body.classList.remove('hidden-background');
+            elements.startMenu.style.display = 'flex';
+            elements.campaignScreen.style.display = 'none';
             resetGame();
-        }, 500); // Delay to show for shooting
-    }, 3000);
-
-    redDot.addEventListener('click', handleRedDotClick, { once: true });
-
-    function handleRedDotClick() {
-        clearTimeout(timeout);
-        changePlayerImage();
-        playGunSound();
-        animateCowboy2(() => {
-            alert('You win!');
-            resetGame();
-        });
-    }
-}
-
-function enableClickDetection() {
-    document.addEventListener('click', detectOutsideClick, { once: true });
-}
-
-function detectOutsideClick(event) {
-    const redDot = document.getElementById('red-dot');
-    if (!redDot.contains(event.target)) {
-        changeOpponentImage(); // Change opponent image to shooting
-        setTimeout(() => {
-            alert('You lose!');
-            resetGame();
-        }, 500); // Delay to show the shooting action
-    }
-}
-
-function changePlayerImage() {
-    const playerShooter = document.getElementById('player-shooter');
-    playerShooter.src = 'asset/cowboys/cowboy1backshot.png';
-}
-
-function changeOpponentImage() {
-    const opponentShooter = document.getElementById('opponent-shooter');
-    opponentShooter.src = 'asset/cowboys/cowboy2shot.png';
-}
-
-function animateCowboy2(callback) {
-    const opponentShooter = document.getElementById('opponent-shooter');
-    const images = [
-        'asset/cowboys/cowboy2gotshot.png',
-        'asset/cowboys/cowboy2gotshot2.png',
-        'asset/cowboys/cowboy2gotshot3.png'
-    ];
-    
-    images.forEach((image, index) => {
-        setTimeout(() => {
-            opponentShooter.src = image;
-            if (index === images.length - 1 && callback) {
-                setTimeout(callback, 1000); // Delay before calling the callback to reset the game
-            }
-        }, index * 1000);
-    });
-}
-
-function resetGame() {
-    document.getElementById('ready-set-go').textContent = '';
-    document.getElementById('red-dot').style.display = 'none';
-    document.removeEventListener('click', detectOutsideClick);
-    
-    const opponentShooter = document.getElementById('opponent-shooter');
-    const playerShooter = document.getElementById('player-shooter');
-
-    opponentShooter.src = 'asset/cowboys/cowboy2.png'; 
-    playerShooter.src = 'asset/cowboys/cowboy1back.png';
-}
-
-function playGunSound() {
-    const gunSound = document.getElementById('gun-sound');
-    gunSound.currentTime = 8;
-    gunSound.play();
-
-    const endGunSound = () => {
-        if (gunSound.currentTime >= 10) {
-            gunSound.pause();
-            gunSound.removeEventListener('timeupdate', endGunSound);
         }
-    };
 
-    gunSound.addEventListener('timeupdate', endGunSound);
+        function showRedDot() {
+            const margin = 100;
+            const randomX = Math.floor(Math.random() * (window.innerWidth / 2 - margin * 2)) + window.innerWidth / 4 + margin;
+            const randomY = Math.floor(Math.random() * (window.innerHeight / 2 - margin * 2)) + window.innerHeight / 4 + margin;
+
+            elements.redDot.style.left = `${randomX}px`;
+            elements.redDot.style.top = `${randomY}px`;
+            elements.redDot.style.display = 'block';
+
+            timeouts.push(setTimeout(() => {
+                if (!isGameActive) return;
+                changeOpponentImage();
+                playGunSound();
+                timeouts.push(setTimeout(() => {
+                    if (!isGameActive) return;
+                    alert('You lose!');
+                    resetGame();
+                }, 500));
+            }, 3000));
+
+            elements.redDot.addEventListener('click', handleRedDotClick, { once: true });
+        }
+
+        function handleRedDotClick() {
+            elements.redDot.style.display = 'none'
+            cleanupTimeouts();
+            if (!isGameActive) return;
+            changePlayerImage();
+            playGunSound();
+            animateCowboy2(() => {
+                if (!isGameActive) return;
+                alert('You win!');
+                resetGame();
+            });
+        }
+
+        function showReadySetGo() {
+            elements.readySetGoText.textContent = 'Ready';
+            timeouts.push(setTimeout(() => {
+                elements.readySetGoText.textContent = 'Set';
+                const randomDelay = (Math.floor(Math.random() * 12) + 3) * 1000;
+                timeouts.push(setTimeout(() => {
+                    if (!isGameActive) return;
+                    elements.readySetGoText.textContent = 'Go';
+                    showRedDot();
+                    enableClickDetection();
+                }, randomDelay));
+            }, 1000));
+        }
+
+        function handleReadyButton() {
+            elements.readyButton.style.display = 'none';
+            showReadySetGo();
+        }
+
+        function enableClickDetection() {
+            outsideClickHandler = detectOutsideClick;
+            document.addEventListener('click', outsideClickHandler, { once: true });
+        }
+
+        function detectOutsideClick(event) {
+            if (!elements.redDot.contains(event.target)) {
+                changeOpponentImage();
+                timeouts.push(setTimeout(() => {
+                    if (!isGameActive) return;
+                    alert('You lose!');
+                    resetGame();
+                }, 3000));
+            }
+        }
+
+        function changePlayerImage() {
+            elements.playerShooter.src = 'asset/cowboys/cowboy1backshot.png';
+        }
+
+        function changeOpponentImage() {
+            elements.opponentShooter.src = 'asset/cowboys/cowboy2shot.png';
+        }
+
+        function animateCowboy2(callback) {
+            const images = [
+                'asset/cowboys/cowboy2gotshot.png',
+                'asset/cowboys/cowboy2gotshot2.png',
+                'asset/cowboys/cowboy2gotshot3.png'
+            ];
+
+            images.forEach((image, index) => {
+                const timeout = setTimeout(() => {
+                    elements.opponentShooter.src = image;
+                    if (index === images.length - 1 && callback && isGameActive) {
+                        timeouts.push(setTimeout(callback, 1000));
+                    }
+                }, index * 1000);
+                timeouts.push(timeout);
+            });
+        }
+
+        function resetGame() {
+            cleanupEvents();
+            elements.readySetGoText.textContent = '';
+            elements.redDot.style.display = 'none';
+            elements.opponentShooter.src = 'asset/cowboys/cowboy2.png';
+            elements.playerShooter.src = 'asset/cowboys/cowboy1back.png';
+            elements.readyButton.style.display = 'block';
+            isGameActive = true;
+        }
+
+        function cleanupEvents() {
+            cleanupTimeouts();
+            if (outsideClickHandler) {
+                document.removeEventListener('click', outsideClickHandler);
+                outsideClickHandler = null;
+            }
+            elements.redDot.removeEventListener('click', handleRedDotClick);
+        }
+
+        function cleanupTimeouts() {
+            timeouts.forEach(timeout => clearTimeout(timeout));
+            timeouts = [];
+        }
+    })();
 }

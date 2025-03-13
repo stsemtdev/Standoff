@@ -1,45 +1,90 @@
 #game-screen {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-  }
-  
-  #shooters-container {
-    margin-top: 20px;
-    display: grid;
-    grid-template-rows: auto auto;
-    justify-items: center;
-    row-gap: 20px;
-  }
-  
-  #opponent-shooter {
-    width: 150px;
-    height: 200px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 1200px;  
+  height: 720px;
+  margin: 0 auto;
+  background-image: url('../asset/episodes/campaign-1-episode.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f4f4f4;
+}
 
-  #player-shooter{
-    width: 400px;
-    height: 600px;
-  }
+#shooters-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-  #ready-set-go {
-    font-size: 2rem;
-    margin-top: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    text-align: center;
-    z-index: 1;
-  }
-  
-  #red-dot {
-    width: 20px;
-    height: 20px;
-    background-color: red;
-    border-radius: 50%;
-    position: absolute;
-    cursor: pointer;
-    z-index: 2;
-  }
+#red-dot-campaign {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  border-radius: 50%;
+  background-image: url('../asset/target/bullseye.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: red;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+#campaign-opponent-shooter {
+  position: absolute;
+  top: 60%;
+  left: 60%;
+  width: 120px;
+  height: 200px;
+}
+
+#campaign-player-shooter {
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 300px;
+}
+
+#ready-set-go-campaign {
+  font-size: 2rem;
+  margin-top: 20px;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#ready-campaign-button,
+#campaign-back-button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: rgb(150, 111, 51);
+  color: whitesmoke;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#ready-campaign-button:hover,
+#campaign-back-button:hover {
+  background-color: #513600;
+}
+
+#buttons-campaign {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}

@@ -1,62 +1,86 @@
 #training-screen {
-  text-align: center;
+  display: block;
+  flex-direction: column;
   align-items: center;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: yellowgreen;
-  color: white;
-  border: solid 1px black;
+  justify-content: center;
+  position: relative;
+  width: 1200px;
+  height: 720px;
+  margin: 0 auto;
+  color: black;
+}
+
+#header {
+  top: 0%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  align-items: center;
+  margin: 20px;
+}
+
+#counter-training {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+#ready-set-go-training {
+  font-size: 24px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  z-index: 2;
 }
 
 #training-area {
   position: relative;
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 95%;
+  background-image: url('../asset/episodes/campaign-1-episode.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f4f4f4;
 }
 
 #player-shooter-training {
   position: absolute;
-  bottom: 20px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: 200px;
-  width: 150px;
+  width: 200px;
+  height: 300px;
 }
 
 #red-dot-training {
   position: absolute;
-  width: 50px;
-  height: 50px;
-  background-color: red;
   border-radius: 50%;
+  background-image: url('../asset/target/bullseye.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: red;
 }
 
-#counter-training {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  color: white;
-}
-
-#ready-training-button {
+#buttons-training {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 20px;
+}
+
+#ready-training-button,
+#training-back-button {
+  margin: 10px;
   padding: 10px 20px;
   font-size: 1rem;
-  background-color: #61dafb;
+  background-color: rgb(150, 111, 51);
+  color: whitesmoke;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-#ready-training-button:hover {
-  background-color: #21a1f1;
-}
-
-#ready-set-go-training {
-  font-size: 24px;
-  margin-bottom: 20px;
+#ready-training-button:hover,
+#training-back-button:hover {
+  background-color: #513600;
 }
